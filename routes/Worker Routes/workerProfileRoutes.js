@@ -19,9 +19,19 @@ router.get("/me", authMiddleware, getWorkerProfile);
 
 router.post("/save", authMiddleware, saveWorkerProfile);
 
+// router.put(
+//   "/profile-image",
+//   authMiddleware,
+//   uploadProfile.single("image"),
+//   uploadProfileImage
+// );
 router.put(
   "/profile-image",
   authMiddleware,
+  (req, res, next) => {
+    console.log("Route reached");
+    next();
+  },
   uploadProfile.single("image"),
   uploadProfileImage
 );

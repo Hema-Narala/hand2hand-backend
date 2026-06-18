@@ -101,7 +101,7 @@ export const sendMessage = async (req, res) => {
     }
 
     const images = req.files?.images
-      ? req.files.images.map(file => file.path)
+      ? req.files.images.map(file => file.secure_url)
       : [];
 
     // const audio = req.files?.audio
@@ -223,8 +223,10 @@ export const getMyChats = async (req, res) => {
     const userId = req.user._id;
 
     const chats = await ChatRoom.find({
-      participants: userId
+      participants: userId,
+      lastMessage: { $ne: ""}
     }).sort({ updatedAt: -1 });
+    // console.log("CHATS:", chats);
 
     const formattedChats = await Promise.all(
       chats.map(async (chat) => {

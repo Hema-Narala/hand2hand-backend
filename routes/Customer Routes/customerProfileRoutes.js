@@ -16,9 +16,19 @@ router.get("/me", authMiddleware, getMyCustomerProfile);
 
 router.post("/save", authMiddleware, createOrUpdateCustomerProfile);
 
+// router.put(
+//   "/image",
+//   authMiddleware,
+//   upload.single("image"),
+//   updateCustomerProfileImage
+// );
 router.put(
   "/image",
   authMiddleware,
+  (req, res, next) => {
+    console.log("CUSTOMER IMAGE ROUTE REACHED");
+    next();
+  },
   upload.single("image"),
   updateCustomerProfileImage
 );

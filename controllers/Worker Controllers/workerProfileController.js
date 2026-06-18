@@ -60,10 +60,16 @@ export const uploadProfileImage = async (req, res) => {
     if (!profile) {
       return res.status(404).json({ message: "Profile not found" });
     }
-
-    profile.profileImage = req.file.path;
+    
+    // profile.profileImage = req.file.path;
+    profile.profileImage = req.file.secure_url;
 
     await profile.save();
+    console.log("Controller reached");
+    // console.log("FILE:", req.file);
+    // console.log("PATH:", req.file.path);
+    // console.log("URL:", req.file.url);
+    // console.log("SECURE URL:", req.file.secure_url);
 
     res.json({ profileImage: profile.profileImage });
 
@@ -85,10 +91,17 @@ export const uploadExperienceImages = async (req, res) => {
     if (!Array.isArray(profile.experienceMedia)) {
       profile.experienceMedia = [];
     }
+    // console.log("FILES:", req.files);
+    // const newImages = req.files.map(file => ({
+    //   url: file.path
+    // }));
+    // console.log("FILES FULL:",JSON.stringify(req.files, null, 2));
 
     const newImages = req.files.map(file => ({
-      url: file.path
+      url: file.secure_url || file.path || file.url
     }));
+
+    // console.log("NEW IMAGES:",JSON.stringify(newImages, null, 2));
 
     profile.experienceMedia.push(...newImages);
 

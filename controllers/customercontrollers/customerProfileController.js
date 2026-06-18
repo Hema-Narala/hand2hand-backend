@@ -59,7 +59,8 @@ export const updateCustomerProfileImage = async (req, res) => {
       return res.status(404).json({ message: "Profile not found" });
     }
 
-    profile.profileImage = req.file.path;
+    // profile.profileImage = req.file.path;
+    profile.profileImage = req.file.secure_url;
     await profile.save();
 
     res.json({ profileImage: profile.profileImage });
