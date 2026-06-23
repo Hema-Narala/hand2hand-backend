@@ -141,6 +141,36 @@ export const deleteExperienceImage = async (req, res) => {
   }
 };
 
+//To get worker profile in customers side
+export const getWorkerProfileById = async (req, res) => {
+  try {
+    const { workerId } = req.params;
+
+    console.log("WORKER ID RECEIVED:", workerId);
+
+    const profile = await WorkerProfile.findOne({
+      user: workerId
+    });
+
+    // console.log("PROFILE FOUND:", profile);
+
+    if (!profile) {
+      return res.status(404).json({
+        message: "Worker profile not found"
+      });
+    }
+
+    res.json(profile);
+
+  } catch (err) {
+    console.log("ERROR:", err);
+
+    res.status(500).json({
+      message: "Server error"
+    });
+  }
+};
+
 // export const deleteExperienceImage = async (req, res) => {
 //   try {
 //     const { url } = req.body;

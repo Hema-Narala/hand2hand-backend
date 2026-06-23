@@ -7,7 +7,9 @@ import {
   saveWorkerProfile,
   uploadProfileImage,
   uploadExperienceImages,
-  deleteExperienceImage
+  getWorkerProfileById,
+  deleteExperienceImage,
+
 } from "../../controllers/Worker Controllers/workerProfileController.js";
 
 const router = express.Router();
@@ -41,6 +43,12 @@ router.put(
   authMiddleware,
   uploadExperience.array("images", 10),
   uploadExperienceImages
+);
+
+router.get(
+  "/view/:workerId",
+  authMiddleware,
+  getWorkerProfileById
 );
 
 router.delete(
