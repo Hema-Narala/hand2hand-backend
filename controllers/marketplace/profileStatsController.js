@@ -5,7 +5,8 @@ import CustomerProfile from "../../models/CustomerModels/CustomerProfile.js";
 
 export const getCustomerStats = async (req, res) => {
   try {
-    const userId = req.user._id;
+
+    const userId = req.params.customerId || req.user._id;
 
     const bookings = await Booking.find({ customer: userId })
       .populate({
@@ -67,7 +68,11 @@ export const getCustomerStats = async (req, res) => {
 
 export const getWorkerStats = async (req, res) => {
   try {
-    const userId = req.user._id;
+
+    // If workerId comes in params use it,
+    // otherwise use logged-in user
+
+    const userId = req.params.workerId || req.user._id;
 
     // ✅ FIRST: Fetch bookings WITH populate
     const bookings = await Booking.find({ worker: userId })

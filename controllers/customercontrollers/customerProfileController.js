@@ -69,3 +69,29 @@ export const updateCustomerProfileImage = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+
+/* =================  VIEW CUSTOMER PROFILE BY ID IN WORKER SIDE ================= */
+export const getCustomerProfileById = async (req, res) => {
+  try {
+    const { customerId } = req.params;
+
+    const profile = await CustomerProfile.findOne({
+      user: customerId
+    });
+
+    if (!profile) {
+      return res.status(404).json({
+        message: "Customer profile not found"
+      });
+    }
+
+    res.json(profile);
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Server error"
+    });
+  }
+};

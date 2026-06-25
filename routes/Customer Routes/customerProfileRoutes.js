@@ -2,7 +2,8 @@ import express from "express";
 import {
   getMyCustomerProfile,
   createOrUpdateCustomerProfile,
-  updateCustomerProfileImage
+  updateCustomerProfileImage,
+  getCustomerProfileById
 } from "../../controllers/customercontrollers/customerProfileController.js";
 
 import authMiddleware from "../../middleware/authMiddleware.js";
@@ -31,6 +32,12 @@ router.put(
   },
   upload.single("image"),
   updateCustomerProfileImage
+);
+
+router.get(
+  "/view/:customerId",
+  authMiddleware,
+  getCustomerProfileById
 );
 
 export default router;

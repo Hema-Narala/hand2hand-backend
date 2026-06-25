@@ -88,11 +88,11 @@ const io = new Server(server, {
 
 // 🔥 SOCKET CONNECTION
 io.on("connection", (socket) => {
-  console.log("⚡ User connected:", socket.id);
+  // console.log("⚡ User connected:", socket.id);
 
   socket.on("joinRoom", (roomId) => {
     socket.join(roomId);
-    console.log(`User joined room: ${roomId}`);
+    // console.log(`User joined room: ${roomId}`);
   });
 
   socket.on("typing", ({ roomId }) => {
@@ -128,7 +128,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    console.log("User disconnected:", socket.id);
+    // console.log("User disconnected:", socket.id);
   });
 });
 

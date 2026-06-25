@@ -146,11 +146,11 @@ export const getWorkerProfileById = async (req, res) => {
   try {
     const { workerId } = req.params;
 
-    console.log("WORKER ID RECEIVED:", workerId);
+    // console.log("WORKER ID RECEIVED:", workerId);
 
     const profile = await WorkerProfile.findOne({
       user: workerId
-    });
+    }).populate("reviews.customer", "firstname username");
 
     // console.log("PROFILE FOUND:", profile);
 

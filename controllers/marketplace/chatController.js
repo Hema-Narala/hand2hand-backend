@@ -95,6 +95,11 @@ export const sendMessage = async (req, res) => {
   try {
     const sender = req.user._id;
     const { roomId, text, messageType } = req.body;
+    console.log("REQ FILES:", req.files);
+    console.log(
+      "IMAGE COUNT:",
+      req.files?.images?.length
+    );
 
     if (!roomId) {
       return res.status(400).json({ message: "Room ID required" });
@@ -249,6 +254,12 @@ export const getMyChats = async (req, res) => {
           });
           role = "worker";
         }
+        //TO GET NO.OF UNREAD MESSAGES
+        const unreadCount = await Message.countDocuments({
+          chatRoom: chat._id,
+          sender: { $ne: userId }, // messages sent by other person
+          seenBy: { $nin: [userId] } // not seen by me
+        });
 
         return {
           _id: chat._id,
@@ -259,7 +270,8 @@ export const getMyChats = async (req, res) => {
             role
           },
           lastMessage: chat.lastMessage,
-          updatedAt: chat.updatedAt
+          updatedAt: chat.updatedAt,
+          unreadCount 
         };
       })
     );
